@@ -1,8 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
 let
-  pretrained_models = fetchzip {
-    url = "";
-    hash = "";
+  pretrained_models = builtins.fetchTarball {
+    url = "http://dev.project-insanity.org:8080/checkpoints.tar.gz";
   };
 in
 (pkgs.buildFHSUserEnv {
@@ -11,7 +10,7 @@ in
     python3
     python3Packages.pip
     python3Packages.virtualenv
-    python3Packages.numpy
+    #python3Packages.numpy
     python3Packages.scipy
     python3Packages.torch
     python3Packages.torchvision
@@ -26,8 +25,8 @@ in
     source venv/bin/activate
     mkdir -p tmp
     TMPDIR=tmp pip install -r requirements.txt
-    ls ${pretrained_models}
-    poop
+    cp ${pretrained_models}/* checkpoints/
+    echo "try using it: python inference.py --driven_audio examples/driven_audio/chinese_poem1.wav --source_video sync_show/original.mp4 --enhancer lip --use_DAIN --time_step 0.5"
     bash
   '';
 }).env
