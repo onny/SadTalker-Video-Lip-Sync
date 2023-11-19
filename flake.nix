@@ -16,6 +16,7 @@
             python3
             libglvnd
             glib
+            python3Packages.torch
           ] ++ [
             pip
             virtualenv
@@ -28,6 +29,7 @@
         );
         profile = ''
         '';
+        runScript = "bash";
       }).env;
     };
 }

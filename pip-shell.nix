@@ -5,20 +5,20 @@ let
   };
 in
 (pkgs.buildFHSUserEnv {
-  name = "pipzone";
+  name = "sadtalker";
   targetPkgs = pkgs: (with pkgs; [
-    python3
-    python3Packages.pip
-    python3Packages.virtualenv
-    #python3Packages.numpy
-    python3Packages.scipy
-    python3Packages.torch
-    python3Packages.torchvision
-    python3Packages.torchaudio
+    python310
     libglvnd
     glib
+  ]) ++ (with pkgs.python310Packages; [
+    pip
+    virtualenv
+    #numpy
+    scipy
+    torch
+    torchvision
+    torchaudio
   ]);
-  #runScript = "bash";
   runScript = pkgs.writeScript "sadtalker-setup" ''
     #!${pkgs.runtimeShell}
     virtualenv venv
